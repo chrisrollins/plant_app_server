@@ -16,9 +16,35 @@ module.exports = {
 		});
 	},
 	userRegistration: function(req, res){
-		
-		models.registration(req, res, function(){
-			res.render('/regtest.html');
-		});
+		let valid = true;
+		const validationErrors = [];
+		console.log(req.body);
+
+		for(let field of ["username", "email", "password"]){
+			if(!req.body[field]){
+				valid = false;
+				validationErrors.push(`${field} is required.`)
+			}
+		}
+		console.log("password and confirm password:", req.body.password, req.body.confirmPassword);
+		console.log(req.body.password !== req.body.confirmPassword);
+		if(req.body.password !== req.body.confirmPassword){
+			valid = false;
+			validationErrors.push("Password and confirm password don't match.");
+		}
+
+		if(valid){
+			models.registration(req, res, function(err, rows, fields){
+				if(err){
+					console.log(err);
+				}else{
+					console.log("rows from register model", rows);
+				}
+
+				res.json({errors: err, data: rows});
+			});
+		}else{
+			res.json({errors: validationErrors, data: undefined});
+		}
 	},
 }

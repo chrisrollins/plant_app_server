@@ -15,6 +15,10 @@ module.exports = {
 		//you can make a query by calling your callback, which you write in the controller.
 		doQuery("select * from users", callback);
 	},
-	test: function(){}
+	registration: function(req, res, callback){	
+		const query = `INSERT INTO user (sessionID, username, email, password, created_at, updated_at) VALUES ("${req.sessionID}", "${req.body.username}", "${req.body.email}", "${req.body.password}", NOW(), NOW())`;
+		console.log(query);
+		doQuery(query, callback);
+	}
 }
 
