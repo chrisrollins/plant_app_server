@@ -34,10 +34,11 @@ module.exports = {
 		}
 
 		if(valid){
-			models.registration(req, res, function(err, rows, fields){
+			models.registration(Object.assign({sessionID: req.sessionID}, req.body), function(err, rows, fields){
 				if(err){
 					console.log(err);
 				}else{
+					req.session.data = {id: rows.insertId};
 					console.log("rows from register model", rows);
 				}
 

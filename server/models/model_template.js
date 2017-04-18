@@ -9,7 +9,7 @@ var doQuery = require('../config/doquery_function.js');
 //send the response (for example res.json(rows) or whatever) from the callback.
 
 module.exports = {
-	test: function(req, res, callback){
+	test: function(req, callback){
 		console.log("model function called successfully");
 	}
 }

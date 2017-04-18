@@ -9,14 +9,14 @@ var doQuery = require('../config/doquery_function.js');
 //send the response (for example res.json(rows) or whatever) from the callback.
 
 module.exports = {
-	userLogin: function(req, res, callback){
+	userLogin: function(data, callback){
 		console.log("model function called successfully");
 
 		//you can make a query by calling your callback, which you write in the controller.
 		doQuery("select * from users", callback);
 	},
-	registration: function(req, res, callback){	
-		const query = `INSERT INTO user (sessionID, username, email, password, created_at, updated_at) VALUES ("${req.sessionID}", "${req.body.username}", "${req.body.email}", "${req.body.password}", NOW(), NOW())`;
+	registration: function(data, callback){	
+		const query = `INSERT INTO user (sessionID, username, email, password, created_at, updated_at) VALUES ("${data.sessionID}", "${data.username}", "${data.email}", "${data.password}", NOW(), NOW())`;
 		console.log(query);
 		doQuery(query, callback);
 	}
