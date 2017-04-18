@@ -1,4 +1,4 @@
-//template for a model file
+//user model
 
 //require these two things to be able to do queries
 var connection = require('../config/mysql.js');
@@ -9,11 +9,12 @@ var doQuery = require('../config/doquery_function.js');
 //send the response (for example res.json(rows) or whatever) from the callback.
 
 module.exports = {
-	test: function(req, res, callback){
+	userLogin: function(req, res, callback){
 		console.log("model function called successfully");
 
 		//you can make a query by calling your callback, which you write in the controller.
 		doQuery("select * from users", callback);
-	}
+	},
+	test: function(){}
 }
 
