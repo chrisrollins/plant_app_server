@@ -10,13 +10,14 @@ routeFunctions = {
   get:{
     '/' : controllers.index,
     '/home' : controllers.home,
-    '/elliot' : controllers.elliotsucks
+    '/elliot' : controllers.elliotsucks,
+    '/retrieve_plants' : controllers.retrievePlants
   },
   post:
   {
       '/register' : controllers.userRegistration,
       '/send_e' : controllers.send_email,
-      "/login" : controllers.userLogin,
+      '/login' : controllers.userLogin,
   }
 };
 

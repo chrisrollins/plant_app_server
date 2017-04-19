@@ -12,24 +12,27 @@ var bcrypt = require("bcryptjs");
 
 module.exports = {
 	userLogin: function(req, res){
-		var validationErrors = [];
+		let validationErrors = [];
+		let statusCode = 200;
 		models.userLogin(Object.assign({sessionID: req.sessionID}, req.body), function(err, rows, fields){
 			console.log(rows, req.body, "!!!");
 			if (err || rows.length === 0){
 				validationErrors.push("Invalid login.");
-				res.json({errors: validationErrors, success: false  });
-
+				statusCode = 401;
 			}
 			else if (bcrypt.compareSync(req.body.password, rows[0].password)){
 				req.session.data = {id : rows[0].id, username : rows[0].username};
 				console.log("888888", bcrypt.compareSync(req.body.password, rows[0].password) );
-				res.json({errors: validationErrors, success: true });
+			}else{
+				statusCode = 401;
+				validationErrors.push("Invalid login.");
 			}
-			
+			res.status(statusCode).json({errors: validationErrors, success: (statusCode === 200) });
 		});
 	},
 	userRegistration: function(req, res){
 		let valid = true;
+		let statusCode = 200;
 		const validationErrors = [];
 		console.log(req.body);
 
@@ -62,6 +65,7 @@ module.exports = {
 				if(err){
 					if(err.code === "ER_DUP_ENTRY"){
 						validationErrors.push("User Name and/or Email is already taken.");
+						statusCode = 401;
 					}
 					console.log(err);
 				}else{
@@ -69,10 +73,11 @@ module.exports = {
 					console.log("rows from register model", rows);
 				}
 
-				res.json({errors: validationErrors, data: rows});
+				res.status(statusCode).json({errors: validationErrors, data: rows});
 			});
 		}else{
-			res.json({errors: validationErrors, data: undefined});
+			statusCode = 401;
+			res.status(statusCode).json({errors: validationErrors, data: undefined});
 		}
 	},
 }
