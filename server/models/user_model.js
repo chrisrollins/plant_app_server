@@ -14,7 +14,7 @@ module.exports = {
 	userLogin: function(data, callback){
 		console.log("model function called successfully");
 		data = sanitizeDataObject(data);
-		doQuery(`SELECT * FROM user WHERE email = "${data.email}"" AND password = "${data.password}"`, callback);
+		doQuery(`SELECT * FROM user WHERE email = "${data.email}"`, callback);
 	},
 	registration: function(data, callback){	
 		data = sanitizeDataObject(data);
@@ -24,3 +24,4 @@ module.exports = {
 	}
 }
 
+	

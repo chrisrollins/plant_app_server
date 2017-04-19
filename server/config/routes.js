@@ -15,7 +15,8 @@ routeFunctions = {
   post:
   {
       '/register' : controllers.userRegistration,
-      '/send_e' : controllers.send_email
+      '/send_e' : controllers.send_email,
+      "/login" : controllers.userLogin,
   }
 };
 
