@@ -1,12 +1,25 @@
 
 //not tested yet
-module.exports = function(queryString){
-	for(let i = 0; i < queryString.length; i++){
-		const charCode = queryString.charCodeAt(0);
-		if( (charCode > 57 && charCode < 64) || charCode === 34 || charCode === 51 || charCode === 52){
-			return false;
+const disallowed = `[]{}()-=+;:.,'"!&?/\\`;
+const sanitize = function(queryString){
+	let result = "";
+	let skip = false;
+	const warnings = [];
+	for(let char of queryString){
+		for(let dis of disallowed){
+			if(char === dis){
+				skip = true;
+				warnings.push(char);
+				break;
+			}
 		}
+		console.log(skip);
+		if(!skip)
+			result += char;
+		skip = false;
 	}
 
-	return true;
-}
+	return {query: result, warnings: warnings};
+};
+
+module.exports = sanitize;

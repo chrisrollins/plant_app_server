@@ -1,10 +1,14 @@
-var connection = require('../config/mysql.js');
+const connection = require('../config/mysql.js');
+const sanitize = require('../config/sanitizeQuery.js');
 
 module.exports = function doQuery(query, callback)
 {
+    const sanitizeResult = sanitize(query);
+    if(sanitizeResult.warnings.length > 0)
+        console.log("Possible SQL injection attempt. Illegal characters removed from query:", sanitizeResult.warnings);
     try
     {
-        connection.query(query, function(err, rows, fields){
+        connection.query(sanitizeResult.query, function(err, rows, fields){
             callback(err, rows, fields);
         });
     }
@@ -13,6 +17,6 @@ module.exports = function doQuery(query, callback)
         callback(e, rows, fields);
         console.log(e);
         console.log("---");
-        console.log(query);
+        console.log(sanitized);
     }
 }
