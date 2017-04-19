@@ -11,8 +11,9 @@ var models = require(path.join(__dirname, "./../config/model_combiner.js"));
 
 module.exports = {
 	userLogin: function(req, res){
-		models.login(req, res, function(){
-			res.render('/logintest.html');
+		models.login(req, res, function(err, rows, fields){
+
+			res.json({errors: err, data: rows});
 		});
 	},
 	userRegistration: function(req, res){
@@ -33,16 +34,29 @@ module.exports = {
 			validationErrors.push("Password and confirm password don't match.");
 		}
 
+		if(!/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(req.body.email)){
+			valid = false;
+			validationErrors.push("Invalid email.");
+		}
+
+		if(!/^[a-z ]{2,32}$/i.test(req.body.username)){
+			valid = false;
+			validationErrors.push("Invalid username. Only numbers and letters are allowed.");
+		}
+
 		if(valid){
 			models.registration(Object.assign({sessionID: req.sessionID}, req.body), function(err, rows, fields){
 				if(err){
+					if(err.code === "ER_DUP_ENTRY"){
+						validationErrors.push("User Name and/or Email is already taken.");
+					}
 					console.log(err);
 				}else{
 					req.session.data = {id: rows.insertId};
 					console.log("rows from register model", rows);
 				}
 
-				res.json({errors: err, data: rows});
+				res.json({errors: validationErrors, data: rows});
 			});
 		}else{
 			res.json({errors: validationErrors, data: undefined});
