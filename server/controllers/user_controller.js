@@ -51,9 +51,9 @@ module.exports = {
 			validationErrors.push("Invalid email.");
 		}
 
-		if(!/[A-Za-z0-9\_]+/.test(req.body.username)){
+		if(!/^[a-zA-Z0-9_.]+$/.test(req.body.username)){
 			valid = false;
-			validationErrors.push("Invalid username. Only numbers and letters are allowed.");
+			validationErrors.push("Invalid username. Only letters, numbers, underscore, and period are allowed.");
 		}
 
 		if(valid){
