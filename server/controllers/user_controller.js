@@ -10,6 +10,11 @@ var bcrypt = require("bcryptjs");
 //when you call a model function it should return a value (usually an array, the result of a query)
 //after that you can make the response here in the controller
 
+const newUserDefaults = {
+	money: 1000,
+	permission_level: 0
+};
+
 module.exports = {
 	userLogin: function(req, res){
 		let validationErrors = [];
@@ -61,7 +66,7 @@ module.exports = {
 
 		if(valid){
 			req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-			models.registration(Object.assign({sessionID: req.sessionID}, req.body), function(err, rows, fields){
+			models.registration(Object.assign({sessionID: req.sessionID}, req.body, newUserDefaults), function(err, rows, fields){
 				if(err){
 					if(err.code === "ER_DUP_ENTRY"){
 						validationErrors.push("User Name and/or Email is already taken.");

@@ -23,6 +23,14 @@ app.use(session({
   cookie: { secure: false, httpOnly: true}
 }));
 
+app.use('/protected', function(req, res, next){
+	if(req.session.data){
+		next();
+	}else{
+		res.status(401).json({errors: ["Please log in."]});
+	}
+})
+
 require('./server/config/db.js');
 require('./server/config/routes.js')(app);
 
