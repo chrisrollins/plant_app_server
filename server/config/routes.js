@@ -12,13 +12,14 @@ routeFunctions = {
     '/home' : controllers.home,
     '/elliot' : controllers.elliotsucks,
     '/retrieve_plants' : controllers.retrievePlants,
-    '/get_random_plant' : controllers.getRandomPlant,
-    '/protected/buy_plant' : controllers.buyPlant
+    '/get_random_plant' : controllers.getRandomPlant
+
   },
   post:{
     '/register' : controllers.userRegistration,
     '/send_e' : controllers.send_email,
     '/login' : controllers.userLogin,
+    '/protected/buy_plant' : controllers.buyPlant
   }
 };
 
