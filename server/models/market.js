@@ -15,11 +15,13 @@ module.exports = {
 			console.log(rows, "!!!");
 		const query2 = `UPDATE user SET user.money = ${rows[0].money - data.price} WHERE user.id = ${data.id}`;
 		console.log(query2, "query2 model buyPlant");
-			if (rows[0].money < data.price){
+			if (rows[0].money < data.price) {
 				callback({error : "You do not have enough money."});
-			}
-			else {
-				doQuery(query2, callback);
+			} else {
+				doQuery(query2, function(){
+					const query3 = `INSERT INTO plant (user_id, name, description, stage, guide, age_days, seeds, created_at, updated_at) VALUES (${data.id}, "${data.name}", "${data.description}", 0, 0, 0, 0, NOW(), NOW())`;
+					doQuery(query3, callback);
+				});
 			}
 		})
 	}

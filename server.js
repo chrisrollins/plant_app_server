@@ -33,7 +33,8 @@ app.use('/protected', function(req, res, next){
 
 require('./server/config/db.js');
 require('./server/config/routes.js')(app);
-
+const plantDefinitions = require('./server/config/plant_classes.js');
+console.log(plantDefinitions.Zucchini.toJSONString());
 
 var server = app.listen(port, function() {
 	console.log("listening on port", port);
