@@ -1,6 +1,3 @@
-//template for a model file
-
-//require these two things to be able to do queries
 const connection = require('../config/mysql.js');
 const doQuery = require('../config/doquery_function.js');
 const sanitizeDataObject = require('../config/sanitizeDataObject.js');

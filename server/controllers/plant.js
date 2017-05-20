@@ -1,11 +1,17 @@
 //Controller template
 
 //the following things enable this controller to access the models, and also to send html files as responses
-var path = require("path");
-var htmlPath = path.join(__dirname, "./../../client/");
-var requireFolder = require("./../config/req_folder.js");
-var models = require(path.join(__dirname, "./../config/model_combiner.js"));
-var plant_data = require(path.join(__dirname, "./../config/plant_data.js"));
+const path = require("path");
+const htmlPath = path.join(__dirname, "./../../client/");
+const requireFolder = require(path.join(__dirname, "./../config/req_folder.js"));
+const models = require(path.join(__dirname, "./../config/model_combiner.js"));
+const plantDefs = require(path.join(__dirname, "./../config/plant_definitions.js"));
+
+const plantArr = [];
+
+for(let key in plantDefs){
+	plantArr.push(plantDefs[key]);
+}
 
 //when you call a model function it should return a value (usually an array, the result of a query)
 //after that you can make the response here in the controller
@@ -24,8 +30,8 @@ module.exports = {
 		}
 	},
 	getRandomPlant(req, res){
-		const index = ~~(Math.random() * (plant_data.plants.length));
-		const plant = plant_data.plants[index];
+		const index = ~~(Math.random() * (plantArr.length));
+		const plant = plantArr[index];
 		res.json(plant);
 	}
 }
