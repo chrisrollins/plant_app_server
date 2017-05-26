@@ -21,16 +21,17 @@ module.exports = {
 		let statusCode = 200;
 		models.userLogin(Object.assign({sessionID: req.sessionID}, req.body), function(err, rows, fields){
 			console.log(rows, req.body, "!!!");
+			console.log("DB error:", err);
+			console.log(rows);
 			if (err || rows.length === 0){
-				validationErrors.push("Invalid login.");
+				validationErrors.push("That email address is not regiestered.");
 				statusCode = 401;
 			}
-			else if (bcrypt.compareSync(req.body.password, rows[0].password)){
+			else if (bcrypt.compareSync(req.body.password, rows[0].password)) {
 				req.session.data = {id : rows[0].id, username : rows[0].username};
-				console.log("888888", bcrypt.compareSync(req.body.password, rows[0].password) );
-			}else{
+			} else {
 				statusCode = 401;
-				validationErrors.push("Invalid login.");
+				validationErrors.push("Incorrect password.");
 			}
 			res.status(statusCode).json({errors: validationErrors, success: (statusCode === 200) });
 		});

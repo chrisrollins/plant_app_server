@@ -14,7 +14,7 @@ module.exports = {
 	userLogin: function(data, callback){
 		console.log("model function called successfully");
 		data = sanitizeDataObject(data);
-		doQuery(`SELECT * FROM user WHERE email = "${data.email}"`, callback);
+		doQuery(`SELECT * FROM user WHERE email = "${data.email.toLowerCase()}"`, callback);
 	},
 	updateUserSessionRecord: function(data, callback){
 		const { sessionID, id} = data;
@@ -23,7 +23,7 @@ module.exports = {
 	},
 	registration: function(data, callback){	
 		data = sanitizeDataObject(data);
-		const query = `INSERT INTO user (sessionID, username, money, permission_level, email, password, created_at, updated_at) VALUES ("${data.sessionID}", "${data.username}", "${data.money}", "${data.permission_level}", "${data.email}", "${data.password}", NOW(), NOW())`;
+		const query = `INSERT INTO user (sessionID, username, money, permission_level, email, password, created_at, updated_at) VALUES ("${data.sessionID}", "${data.username}", "${data.money}", "${data.permission_level}", "${data.email.toLowerCase()}", "${data.password}", NOW(), NOW())`;
 		console.log(query);
 		doQuery(query, callback);
 	}
