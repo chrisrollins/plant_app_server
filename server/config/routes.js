@@ -1,10 +1,10 @@
-var fs = require("fs");
-var path = require("path");
-var controllerPath = path.join(__dirname, "./../controllers");
-var controllers = require(path.join(__dirname, "./../config/controller_combiner.js"));
-var session = require("express-session");
+const fs = require("fs");
+const path = require("path");
+const controllerPath = path.join(__dirname, "./../controllers");
+const controllers = require(path.join(__dirname, "./../config/controller_combiner.js"));
+const session = require("express-session");
 
-console.log(controllers);
+console.log("controllers:", controllers);
 
 routeFunctions = {
   get:{
@@ -45,7 +45,7 @@ function doForEveryRoute(req, res, callback)
 module.exports = function(app){
 
   app.get('*.*', function(req, res){
-    console.log(`file: ${req.path}`);
+    console.log(`file requested: ${req.path}`);
     res.sendFile(req.path);
   });
 

@@ -1,14 +1,13 @@
 //modules
-var express = require("express");
-var path = require("path");
-var bodyParser = require("body-parser");
-var mysql = require("mysql");
-//var bcrypt = require("bcryptjs");
-var session = require("express-session");
-var crypto = require("crypto");
-var app = express();
-var port = 5000;
-var keys = require(path.join(__dirname, "./server/config/api_keys.js"));
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const mysql = require("mysql");
+const session = require("express-session");
+const crypto = require("crypto");
+const app = express();
+const port = 5000;
+const keys = require(path.join(__dirname, "./server/config/api_keys.js"));
 
 console.log("api keys:", keys);
 
@@ -19,6 +18,16 @@ app.use(express.static(path.join(__dirname, '/client')));
 app.set('views', path.join(__dirname, './server'));
 app.set('view engine', 'ejs');
 
+app.use('', function(req, res, next){
+	;
+	for(let key in req.connection)
+	{
+		console.log(key);
+	}
+    console.log(`incoming connection.\nclient ip: ${req.ip}`);
+    next();
+})
+
 app.use(session({
   secret: crypto.randomBytes(48).toString("hex"),
   resave: false,
@@ -26,10 +35,10 @@ app.use(session({
   cookie: { secure: false, httpOnly: true}
 }));
 
-app.use('/protected', function(req, res, next){
+app.use('/protected', function(req, res, next) {
 	if(req.session.data){
 		next();
-	}else{
+	} else {
 		res.status(401).json({errors: ["Please log in."]});
 	}
 })
@@ -37,6 +46,6 @@ app.use('/protected', function(req, res, next){
 require('./server/config/db.js');
 require('./server/config/routes.js')(app);
 
-var server = app.listen(port, function() {
+const server = app.listen(port, function() {
 	console.log("listening on port", port);
 });
