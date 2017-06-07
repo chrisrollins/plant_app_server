@@ -13,8 +13,8 @@ routeFunctions = {
     '/elliot' : controllers.elliotsucks,
     '/retrieve_plants' : controllers.retrievePlants,
     '/get_random_plant' : controllers.getRandomPlant,
-    '/session' : controllers.getSession
-
+    '/session' : controllers.getSession,
+    '/weather' : controllers.getWeather
   },
   post:{
     '/register' : controllers.userRegistration,
