@@ -14,7 +14,8 @@ routeFunctions = {
     '/retrieve_plants' : controllers.retrievePlants,
     '/get_random_plant' : controllers.getRandomPlant,
     '/session' : controllers.getSession,
-    '/weather' : controllers.getWeather
+    '/weather' : controllers.getWeather,
+    '/protected/profile' : controllers.profile
   },
   post:{
     '/register' : controllers.userRegistration,
