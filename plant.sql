@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema plant
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema plant
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `plant` DEFAULT CHARACTER SET utf8 ;
+USE `plant` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`user`
+-- Table `plant`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+CREATE TABLE IF NOT EXISTS `plant`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `sessionID` VARCHAR(255) NULL,
   `username` VARCHAR(255) NOT NULL,
@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user` (
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`plant`
+-- Table `plant`.`plant`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`plant` (
+CREATE TABLE IF NOT EXISTS `plant`.`plant` (
   `id` INT NOT NULL,
   `name` VARCHAR(255) NULL,
   `stage` INT NULL,
@@ -49,16 +49,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`plant` (
   INDEX `fk_plant_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_plant_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `mydb`.`user` (`id`)
+    REFERENCES `plant`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`plant_action`
+-- Table `plant`.`plant_action`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`plant_action` (
+CREATE TABLE IF NOT EXISTS `plant`.`plant_action` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(255) NULL,
@@ -72,16 +72,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`plant_action` (
   INDEX `fk_plant_action_plant1_idx` (`plant_id` ASC),
   CONSTRAINT `fk_plant_action_plant1`
     FOREIGN KEY (`plant_id`)
-    REFERENCES `mydb`.`plant` (`id`)
+    REFERENCES `plant`.`plant` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`offer`
+-- Table `plant`.`offer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`offer` (
+CREATE TABLE IF NOT EXISTS `plant`.`offer` (
   `id` INT NOT NULL,
   `seeds` INT NULL,
   `user_id` INT NOT NULL,
@@ -94,12 +94,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`offer` (
   INDEX `fk_offer_plant1_idx` (`plant_id` ASC),
   CONSTRAINT `fk_offer_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `mydb`.`user` (`id`)
+    REFERENCES `plant`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_offer_plant1`
     FOREIGN KEY (`plant_id`)
-    REFERENCES `mydb`.`plant` (`id`)
+    REFERENCES `plant`.`plant` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
