@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema plantDB
+-- Schema mydb
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema plantDB
+-- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `plantDB` DEFAULT CHARACTER SET utf8 ;
-USE `plantDB` ;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
 
 -- -----------------------------------------------------
--- Table `plantDB`.`user`
+-- Table `mydb`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `plantDB`.`user` (
+CREATE TABLE IF NOT EXISTS `mydb`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `sessionID` VARCHAR(255) NULL,
   `username` VARCHAR(255) NOT NULL,
@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `plantDB`.`user` (
   `password` VARCHAR(255) NOT NULL,
   `permission_level` INT NULL,
   `money` MEDIUMTEXT NULL,
+  `weather` VARCHAR(255) NULL,
   `created_at` DATETIME NULL,
   `updated_at` DATETIME NULL,
   PRIMARY KEY (`id`),
@@ -33,15 +34,13 @@ CREATE TABLE IF NOT EXISTS `plantDB`.`user` (
 
 
 -- -----------------------------------------------------
--- Table `plantDB`.`plant`
+-- Table `mydb`.`plant`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `plantDB`.`plant` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `mydb`.`plant` (
+  `id` INT NOT NULL,
   `name` VARCHAR(255) NULL,
-  `description` VARCHAR(255) NULL,
   `stage` INT NULL,
   `user_id` INT NOT NULL,
-  `guide` LONGTEXT NULL,
   `age_days` INT NULL,
   `seeds` INT NULL,
   `created_at` DATETIME NULL,
@@ -50,17 +49,17 @@ CREATE TABLE IF NOT EXISTS `plantDB`.`plant` (
   INDEX `fk_plant_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_plant_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `plantDB`.`user` (`id`)
+    REFERENCES `mydb`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `plantDB`.`plant_action`
+-- Table `mydb`.`plant_action`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `plantDB`.`plant_action` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `mydb`.`plant_action` (
+  `id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(255) NULL,
   `health` INT NULL,
@@ -73,17 +72,17 @@ CREATE TABLE IF NOT EXISTS `plantDB`.`plant_action` (
   INDEX `fk_plant_action_plant1_idx` (`plant_id` ASC),
   CONSTRAINT `fk_plant_action_plant1`
     FOREIGN KEY (`plant_id`)
-    REFERENCES `plantDB`.`plant` (`id`)
+    REFERENCES `mydb`.`plant` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `plantDB`.`offer`
+-- Table `mydb`.`offer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `plantDB`.`offer` (
-  `id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `mydb`.`offer` (
+  `id` INT NOT NULL,
   `seeds` INT NULL,
   `user_id` INT NOT NULL,
   `plant_id` INT NOT NULL,
@@ -95,12 +94,12 @@ CREATE TABLE IF NOT EXISTS `plantDB`.`offer` (
   INDEX `fk_offer_plant1_idx` (`plant_id` ASC),
   CONSTRAINT `fk_offer_user1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `plantDB`.`user` (`id`)
+    REFERENCES `mydb`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_offer_plant1`
     FOREIGN KEY (`plant_id`)
-    REFERENCES `plantDB`.`plant` (`id`)
+    REFERENCES `mydb`.`plant` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

@@ -21,6 +21,7 @@ class Action{
 			this.displayName = displayName;
 			this.effectName = effectName;
 			this.stats = stats;
+			this.data = data;
 			this.plantSQL_ID = plantSQL_ID;
 			this.playerSQL_ID = plantSQL_ID;
 		}

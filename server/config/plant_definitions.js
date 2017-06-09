@@ -3,7 +3,7 @@ const effectDefaults = Object.freeze({
 	"water": {health: 1}, //rain should count as water
 });
 class PlantDefinition {
-	constructor(name, description, price, img_url, health, idealTemp, idealHumidity){
+	constructor(name, description, guide, price, img_url, health, idealTemp, idealHumidity){
 		
 		//this enables you to pass an object with keys matching the parameters instead of passing the parameters directly.
 		if(typeof name === "object")
@@ -14,6 +14,7 @@ class PlantDefinition {
 		{
 			this.name = name;
 			this.description = description;
+			this.guide = guide;
 			this.price = price;
 			this.img_url = img_url;
 			this.health = health;
@@ -50,6 +51,7 @@ const addPlantDef = function(plant){
 addPlantDef(new PlantDefinition({
 name: "Zucchini",
 description: "Green and long.",
+guide: "",
 price: 10,
 img_url: "https://s3-us-west-1.amazonaws.com/fluffy-system-plant-app/plant-images/zucchini.jpg",
 health: 100,
