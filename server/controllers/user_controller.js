@@ -32,13 +32,13 @@ module.exports = {
 								validationErrors.push("There was a problem while logging in. Please try again in a few minutes.");
 								res.status(500).json({ errors: validationErrors, success: false });
 							}
-						}); 
+						});
 					} else {
 						validationErrors.push("Incorrect password.");
 						res.status(401).json({ errors: validationErrors, success: false });
 					}
 				});
-			} 
+			}
 		});
 	},
 	userRegistration: function(req, res) {
@@ -82,7 +82,7 @@ module.exports = {
 							validationErrors.push("There was a problem with registration. Please try again in a few minutes.");
 							statusCode = 500;
 						}
-						//console.log(err);
+						console.log(err);
 					} else {
 						req.session.data = {id: rows.insertId};
 						console.log("rows from register model", rows);
