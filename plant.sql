@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `plant`.`user` (
 -- Table `plant`.`plant`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `plant`.`plant` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NULL,
   `stage` INT NULL,
   `user_id` INT NOT NULL,
@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 -- Table `plant`.`plant_action`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `plant`.`plant_action` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(255) NULL,
   `health` INT NULL,
@@ -82,7 +82,7 @@ ENGINE = InnoDB;
 -- Table `plant`.`offer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `plant`.`offer` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `seeds` INT NULL,
   `user_id` INT NOT NULL,
   `plant_id` INT NOT NULL,
