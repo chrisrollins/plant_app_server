@@ -1,7 +1,17 @@
-const path = require("path");
-const htmlPath = path.join(__dirname, "./../../client/");
-const requireFolder = require(path.join(__dirname, "./../config/req_folder.js"));
-const models = require(path.join(__dirname, "./../config/model_combiner.js"));
-const allPlantIDs = require(path.join(__dirname, "./../config/dash_board.js"));
+const doQuery = require('../config/doquery_function.js');
 
-console.log("all plants id from model", allPlantIDs);
+module.exports = {
+	dashboad_plants: function(callback){
+		doQuery("SELECT COUNT(*) FROM plants", function(err, count){
+			console.log(count);
+
+			if(count < 100) //this checks if the DB is big enough to start only pulling some of it.
+			{
+				doQuery("SELECT * FROM plants", callback);
+			} else {
+				doQuery("SELECT * FROM plants WHERE (ABS(CAST((BINARY_CHECKSUM(*) * RAND()) as int)) % 100) < 10 LIMIT 100", callback);
+			}
+		})
+		
+	}
+}
