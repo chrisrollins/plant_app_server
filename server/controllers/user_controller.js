@@ -15,9 +15,6 @@ module.exports = {
 	userLogin: function(req, res) {
 		let validationErrors = [];
 		models.userLogin(Object.assign({ sessionID: req.sessionID }, req.body), function(err, rows, fields) {
-			// console.log(rows, req.body, "!!!");
-			// console.log("DB error:", err);
-			// console.log(rows);
 			if (err || rows.length === 0) {
 				validationErrors.push("That email address is not regiestered.");
 				res.status(401).json({ errors: validationErrors, success: false });
@@ -45,7 +42,6 @@ module.exports = {
 		let valid = true;
 		let statusCode = 200;
 		const validationErrors = [];
-		console.log(req.body);
 
 		for(let field of ["username", "email", "password"]) {
 			if(!req.body[field]){
@@ -53,8 +49,6 @@ module.exports = {
 				validationErrors.push(`${field} is required.`)
 			}
 		}
-		// console.log("password and confirm password:", req.body.password, req.body.confirmPassword);
-		// console.log(req.body.password !== req.body.confirmPassword);
 		if(req.body.password !== req.body.confirmPassword){
 			valid = false;
 			validationErrors.push("Password and confirm password don't match.");

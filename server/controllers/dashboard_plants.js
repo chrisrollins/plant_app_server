@@ -22,6 +22,7 @@ function shuffle(arr) {
 
 module.exports = {
 	dashboard_plants: function(req, res){
+		console.log(models);
 		models.dashboard_plants(function(err, rows, fields){
 			if(!err) {
 				const randomPlants = shuffle(rows).slice(0, 5);

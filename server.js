@@ -19,11 +19,6 @@ app.set('views', path.join(__dirname, './server'));
 app.set('view engine', 'ejs');
 
 app.use('', function(req, res, next){
-	;
-	for(let key in req.connection)
-	{
-		console.log(key);
-	}
     console.log(`incoming connection.\nclient ip: ${req.ip}`);
     next();
 })
